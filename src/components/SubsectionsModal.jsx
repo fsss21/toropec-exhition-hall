@@ -49,7 +49,7 @@ function SubsectionsModal({ section, onClose }) {
                 className={styles.button}
                 onClick={() => openSubsection(sub)}
               >
-                {sub.title}
+                {sub.shortTitle ?? sub.title}
               </button>
             ))}
           </div>
@@ -62,7 +62,7 @@ function SubsectionsModal({ section, onClose }) {
                   className={styles.button}
                   onClick={() => openSubsection(sub)}
                 >
-                  {sub.title}
+                  {sub.shortTitle ?? sub.title}
                 </button>
               ))}
             </div>

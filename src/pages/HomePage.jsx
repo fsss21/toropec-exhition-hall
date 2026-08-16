@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import themeImg from '../assets/main_theme_img.jpg'
 import themeImg4k from '../assets/main_theme_img-4k.jpg'
 import SubsectionsModal from '../components/SubsectionsModal.jsx'
+import { getSectionPath } from '../utils/sectionNavigation.js'
 import styles from './HomePage.module.css'
 
 function HomePage({ data }) {
@@ -28,7 +29,7 @@ function HomePage({ data }) {
     }
 
     return (
-      <Link key={section.id} className={styles.button} to={`/section/${section.id}`}>
+      <Link key={section.id} className={styles.button} to={getSectionPath(section)}>
         {section.shortTitle}
       </Link>
     )

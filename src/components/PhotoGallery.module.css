@@ -18,6 +18,147 @@
   list-style: none;
 }
 
+.side.album {
+  width: 100%;
+}
+
+.side .albumPhoto img {
+  max-height: 36vh;
+}
+
+.album {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+  width: min(860px, 100%);
+  margin-inline: auto;
+}
+
+.albumPhoto {
+  
+}
+
+.albumPhoto img {
+  width: 100%;
+  max-height: 52vh;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #221102;
+  background: rgba(255, 250, 240, 0.55);
+}
+
+.albumText {
+  width: 100%;
+  text-align: center;
+}
+
+.albumCaption {
+  margin: 0;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #221102;
+}
+
+.albumDescription {
+  margin: 8px 0 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: #5c4333;
+}
+
+.albumControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.albumNav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.albumArrow,
+.fullscreenButton {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #221102;
+  border-radius: 2px;
+  background: #f8e5b9;
+  color: #221102;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.18);
+}
+
+.albumArrow:hover,
+.fullscreenButton:hover {
+  background: #f1dfba;
+}
+
+.albumArrow:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.albumCounter {
+  min-width: 64px;
+  text-align: center;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1rem;
+  color: #221102;
+}
+
+.fullscreenButton {
+  font-size: 1.15rem;
+}
+
+.exhibits .heading {
+  display: none;
+}
+
+.exhibits .grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+
+}
+
+.exhibits .grid > li {
+  border-right: 1px solid #221102;
+  border-bottom: 1px solid #221102;
+}
+
+.exhibits .grid > li:nth-child(4n) {
+  border-right: 0;
+}
+
+.exhibits .grid > li:nth-child(n + 5) {
+  border-bottom: 0;
+}
+
+.exhibits .card {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 12px;
+}
+
+.exhibits .card img,
+.exhibits .placeholder {
+ 
+  border: 1px solid #221102;
+}
+
 .card {
   width: 100%;
   padding: 0;
@@ -37,8 +178,17 @@
 
 .caption {
   display: block;
-  padding: 8px 10px 10px;
-  font-size: 0.88rem;
+  padding: 8px 10px 4px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.description {
+  display: block;
+  padding: 0 10px 10px;
+  font-size: 0.82rem;
+  line-height: 1.4;
   color: var(--ink-soft);
 }
 
@@ -49,7 +199,7 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  height: 140px;
+  height: 220px;
   padding: 12px;
   background:
     repeating-linear-gradient(
@@ -88,7 +238,7 @@
 }
 
 .figure img {
-  max-height: 78vh;
+  max-height: 70vh;
   width: auto;
   margin: 0 auto;
   border: 1px solid #efe4cc;
@@ -101,8 +251,17 @@
   font-size: 1rem;
 }
 
+.lightboxText {
+  margin: 8px auto 0;
+  max-width: 640px;
+  text-align: center;
+  color: #efe4cc;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
 .placeholderLarge {
-  width: min(640px, 80vw);
+  width: min(530px, 80vw);
   height: 42vh;
   background: rgba(243, 232, 208, 0.9);
 }
@@ -136,6 +295,25 @@
 
 .next {
   right: 18px;
+}
+
+@media (max-width: 900px) {
+  .side .grid,
+  .exhibits .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .exhibits .grid > li:nth-child(4n) {
+    border-right: 1px solid #221102;
+  }
+
+  .exhibits .grid > li:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .exhibits .grid > li:nth-child(n + 5) {
+    border-bottom: 1px solid #221102;
+  }
 }
 
 @media (max-width: 720px) {

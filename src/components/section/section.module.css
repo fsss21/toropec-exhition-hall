@@ -3,11 +3,11 @@
   display: grid;
   grid-template-columns: minmax(220px, 24%) 1fr;
   grid-template-rows: 1fr auto;
-  column-gap: 3%;
+  column-gap: 1.5%;
   padding: 16px;
   background-color: #d9c4a0;
   background-size: cover;
-  background-position: center;
+  background-position: center 20%;
   background-repeat: no-repeat;
   overflow: hidden;
 }
@@ -15,26 +15,40 @@
 .sidebar {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   min-height: 0;
   height: 100%;
   overflow: hidden;
 }
 
+.navStack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 320px;
+}
+
 .scrollSlot {
-  flex: 0 0 28px;
+  flex: 0 0 44px;
   display: grid;
   place-items: center;
+  width: 100%;
 }
 
 .menu {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow: hidden;
+  flex: 0 0 auto;
+  width: 100%;
+  min-height: 560px;
+  height: min(700px, 72svh);
+  overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 12px;
+  align-items: center;
+  gap: 16px;
+  padding-top: 4px;
 }
 
 .group {
@@ -43,10 +57,11 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  width: 100%;
 }
 
 .sideButton {
-  width: 300px;
+  width: 320px;
   min-height: 58px;
   padding: 8px 12px;
   border: 1px solid #221102;
@@ -54,15 +69,17 @@
   background: #f8e5b9;
   color: #221102;
   font-family: 'Lora', Georgia, serif;
-  font-size: 0.95rem;
+  font-size: 18px;
   font-weight: 700;
   line-height: 1.25;
   text-align: center;
   cursor: pointer;
   box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.18);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
 }
-
-
 
 .active {
   background: #221102;
@@ -77,7 +94,7 @@
 
 .branch {
   position: relative;
-  width: 300px;
+  width: 320px;
 }
 
 .branch::before {
@@ -99,14 +116,27 @@
   align-items: center;
   gap: 10px;
   padding: 0 0 8px;
+  animation: subsIn 0.25s ease;
+}
+
+@keyframes subsIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .subButton {
   position: relative;
   z-index: 1;
-  width: 88%;
+  width: 95%;
   min-height: 52px;
-  font-size: 0.88rem;
+  font-size: 16px;
 }
 
 .dotRule {
@@ -137,14 +167,14 @@
 .scrollHint {
   display: grid;
   place-items: center;
-  width: 100%;
-  height: 28px;
+  width: 48px;
+  height: 44px;
   margin: 0;
   padding: 0;
   border: 0;
   background: transparent;
   color: #221102;
-  font-size: 18px;
+  font-size: 32px;
   line-height: 1;
   cursor: pointer;
 }
@@ -156,7 +186,24 @@
 
 .content {
   min-width: 0;
-  padding: 2.5vh 5% 2vh 4%;
+  min-height: 0;
+  height: 100%;
+  padding: 2.5vh 8% 2vh 0;
+  overflow: auto;
+}
+
+.peopleRoot {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100%;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.peopleBody {
+  flex: 1;
+  min-height: 0;
   overflow: auto;
 }
 
@@ -172,7 +219,7 @@
 .doubleLine {
   height: 6px;
   margin: 0 auto 18px;
-  width: min(920px, 92%);
+  width: 100%;
   border-top: 2px solid #221102;
   border-bottom: 1px solid #221102;
 }
@@ -197,6 +244,156 @@
   color: #2c1f16;
 }
 
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 28px;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.splitText .subtitle {
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.splitText .texts {
+  margin: 0;
+  max-width: none;
+}
+
+.pageHint {
+  margin: 14px 0 0;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #5c4333;
+}
+
+.peopleSections {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.peopleSectionTitle {
+  margin: 0 0 14px;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #221102;
+  text-align: center;
+}
+
+.personGroupLabel {
+  margin: 0 0 8px;
+  font-size: 0.92rem;
+  color: #5c4333;
+  font-style: italic;
+}
+
+.peopleGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.personCard {
+  width: 100%;
+  padding: 0;
+  border: 1px solid #221102;
+  background: #f8e5b9;
+  color: #221102;
+  cursor: pointer;
+  box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.18);
+  text-align: center;
+}
+
+.personCard img,
+.personPlaceholder {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(61, 43, 31, 0.05),
+      rgba(61, 43, 31, 0.05) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+}
+
+.personPlaceholder {
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+  color: #5c4333;
+}
+
+.personName {
+  display: block;
+  padding: 10px 8px;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.personView {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 0;
+}
+
+.personSplit {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.personSplitTextOnly {
+  grid-template-columns: 1fr;
+}
+
+.personText .texts {
+  margin: 0 0 16px;
+  max-width: none;
+}
+
+.personTitle {
+  margin: 0 0 14px;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #221102;
+}
+
+.personTextNav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.personTextNav .pageHint {
+  margin: 0;
+  min-width: 56px;
+}
+
+.personFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
 .footerLeft {
   display: flex;
   align-items: center;
@@ -207,12 +404,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 1200px;
+  width: 100%;
+  max-width: 1200px;
   gap: 12px;
   padding-top: 12px;
-}
-
-.footer{
   grid-column: 2;
 }
 
@@ -272,6 +467,20 @@
 
   .sidebar {
     max-height: 32vh;
+  }
+
+  .split,
+  .personSplit {
+    grid-template-columns: 1fr;
+  }
+
+  .peopleGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .personFooter {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .footerLeft,
