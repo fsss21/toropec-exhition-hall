@@ -6,10 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "server": "node src/server/index.js",
+    "build:server:win": "node -e \"try { require('fs').unlinkSync('build/launch.exe'); } catch (error) {}\" && pkg src/server/index.js --targets node18-win-x64 --output build/launch.exe --config package.json",
+    "build:win": "npm run build && npm run build:server:win",
     "lint": "oxlint",
     "preview": "vite preview"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "fs-extra": "^11.3.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.2"
@@ -17,6 +23,17 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^6.0.4",
     "oxlint": "^1.75.0",
+    "pkg": "^5.8.1",
     "vite": "^8.2.0"
+  },
+  "pkg": {
+    "scripts": [
+      "src/server/index.js",
+      "src/server/utils/serverSetup.js"
+    ],
+    "assets": [
+      "build/**/*"
+    ],
+    "outputPath": "build"
   }
 }
