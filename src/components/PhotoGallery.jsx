@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { resolveImageSrc } from '../utils/imageSrc.js'
 import styles from './PhotoGallery.module.css'
 
 function PhotoGallery({
@@ -61,8 +62,10 @@ function PhotoGallery({
     setCurrentIndex((index) => (index + 1) % pageItems.length)
   }
 
-  const renderMedia = (image, className) =>
-    broken[image.src] ? (
+  const renderMedia = (image, className) => {
+    const src = resolveImageSrc(image.src)
+
+    return broken[image.src] || broken[src] ? (
       <div className={styles.placeholderLarge}>
         <span>Изображение ещё не добавлено</span>
         <small>{image.src}</small>
@@ -70,11 +73,18 @@ function PhotoGallery({
     ) : (
       <img
         className={className}
-        src={image.src}
+        src={src}
         alt={image.alt}
-        onError={() => setBroken((state) => ({ ...state, [image.src]: true }))}
+        onError={() =>
+          setBroken((state) => ({
+            ...state,
+            [image.src]: true,
+            [src]: true,
+          }))
+        }
       />
     )
+  }
 
   const lightbox = fullscreen && current ? (
     <div

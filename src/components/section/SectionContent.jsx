@@ -78,6 +78,7 @@ function SectionContent({
           canGoNext={canGoNext}
           onPrevSection={onPrevSection}
           onNextSection={onNextSection}
+          hideFooterArrowsOnPerson={section.id === 'sailors' || content.id === 'sailors'}
         />
       ) : null}
 

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import PhotoGallery from '../../PhotoGallery.jsx'
+import { resolveImageSrc } from '../../../utils/imageSrc.js'
 import styles from '../section.module.css'
 
 function PeopleLayout({
@@ -12,6 +13,7 @@ function PeopleLayout({
   onNextSection,
   canGoPrev,
   canGoNext,
+  hideFooterArrowsOnPerson = false,
 }) {
   const navigate = useNavigate()
   const [selectedId, setSelectedId] = useState(null)
@@ -66,31 +68,35 @@ function PeopleLayout({
     onNextSection?.()
   }
 
-  const renderPortraitCard = (item) => (
-    <li key={item.id}>
-      <button
-        type="button"
-        className={styles.personCard}
-        onClick={() => setSelectedId(item.id)}
-      >
-        {broken[item.portrait?.src] || !item.portrait?.src ? (
-          <div className={styles.personPlaceholder}>Нет портрета</div>
-        ) : (
-          <img
-            src={item.portrait.src}
-            alt={item.portrait.alt || item.name}
-            onError={() =>
-              setBroken((state) => ({
-                ...state,
-                [item.portrait.src]: true,
-              }))
-            }
-          />
-        )}
-        <span className={styles.personName}>{item.name}</span>
-      </button>
-    </li>
-  )
+  const renderPortraitCard = (item) => {
+    const portraitSrc = resolveImageSrc(item.portrait?.src)
+
+    return (
+      <li key={item.id}>
+        <button
+          type="button"
+          className={styles.personCard}
+          onClick={() => setSelectedId(item.id)}
+        >
+          {broken[item.portrait?.src] || !portraitSrc ? (
+            <div className={styles.personPlaceholder}>Нет портрета</div>
+          ) : (
+            <img
+              src={portraitSrc}
+              alt={item.portrait.alt || item.name}
+              onError={() =>
+                setBroken((state) => ({
+                  ...state,
+                  [item.portrait.src]: true,
+                }))
+              }
+            />
+          )}
+          <span className={styles.personName}>{item.name}</span>
+        </button>
+      </li>
+    )
+  }
 
   return (
     <div className={styles.peopleRoot}>
@@ -173,26 +179,28 @@ function PeopleLayout({
           </Link>
         </div>
 
-        <div className={styles.arrows}>
-          <button
-            type="button"
-            className={styles.arrow}
-            onClick={() => handleSectionNav(-1)}
-            disabled={!person && !canGoPrev}
-            aria-label="Предыдущий подраздел"
-          >
-            ‹
-          </button>
-          <button
-            type="button"
-            className={styles.arrow}
-            onClick={() => handleSectionNav(1)}
-            disabled={!person && !canGoNext}
-            aria-label="Следующий подраздел"
-          >
-            ›
-          </button>
-        </div>
+        {hideFooterArrowsOnPerson && person ? null : (
+          <div className={styles.arrows}>
+            <button
+              type="button"
+              className={styles.arrow}
+              onClick={() => handleSectionNav(-1)}
+              disabled={!person && !canGoPrev}
+              aria-label="Предыдущий подраздел"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              className={styles.arrow}
+              onClick={() => handleSectionNav(1)}
+              disabled={!person && !canGoNext}
+              aria-label="Следующий подраздел"
+            >
+              ›
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

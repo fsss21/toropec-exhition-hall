@@ -33,21 +33,11 @@
 }
 
 .rowOne {
-  width: 100%;
+  width: 110%;
 }
 
 .rowTwo {
-  width: 97%;
-  padding-inline: 5.5%;
-}
-
-.rowTwo::before {
-  left: 10px;
-  right: 10px;
-}
-
-.rowThree {
-  width: 68%;
+  width: 100%;
 }
 
 .row::before {
@@ -131,8 +121,7 @@
 
   .row,
   .rowOne,
-  .rowTwo,
-  .rowThree {
+  .rowTwo {
     width: 100%;
     gap: 6px;
   }

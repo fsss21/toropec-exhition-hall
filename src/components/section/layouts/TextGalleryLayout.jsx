@@ -1,4 +1,5 @@
 import PhotoGallery from '../../PhotoGallery.jsx'
+import ScrollableTexts from '../ScrollableTexts.jsx'
 import styles from '../section.module.css'
 
 function TextGalleryLayout({ title, subtitle, texts = [], images = [] }) {
@@ -9,11 +10,7 @@ function TextGalleryLayout({ title, subtitle, texts = [], images = [] }) {
       <div className={styles.split}>
         <div className={styles.splitText}>
           {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
-          <div className={styles.texts}>
-            {texts.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-          </div>
+          <ScrollableTexts texts={texts} />
         </div>
         <PhotoGallery images={images} variant="side" showHeading={false} />
       </div>
