@@ -11,7 +11,6 @@ function HomePage({ data }) {
   const rows = [
     data.sections.slice(0, 3),
     data.sections.slice(3, 6),
-    data.sections.slice(6, 8),
   ]
 
   const renderButton = (section) => {
@@ -45,7 +44,7 @@ function HomePage({ data }) {
       <nav className={styles.nav} aria-label="Разделы выставки">
         {rows.map((items, index) => {
           const isPair = items.length === 2
-          const rowClass = [styles.rowOne, styles.rowTwo, styles.rowThree][index]
+          const rowClass = [styles.rowOne, styles.rowTwo][index]
 
           return (
             <div
