@@ -376,6 +376,7 @@
 
 .personName {
   display: block;
+  height: 60px;
   padding: 10px 8px;
   font-family: 'Lora', Georgia, serif;
   font-size: 0.95rem;
