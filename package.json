@@ -32,7 +32,13 @@
       "src/server/utils/serverSetup.js"
     ],
     "assets": [
+      "build/index.html",
+      "build/*",
       "build/**/*"
+    ],
+    "ignore": [
+      "build/*.exe",
+      "build/**/*.exe"
     ],
     "outputPath": "build"
   }
