@@ -4,7 +4,7 @@ import styles from '../section.module.css'
 
 function TextGalleryLayout({ title, subtitle, texts = [], images = [] }) {
   return (
-    <>
+    <div className={styles.splitRoot}>
       <h1 className={styles.title}>{title}</h1>
       <div className={styles.doubleLine} aria-hidden="true" />
       <div className={styles.split}>
@@ -14,7 +14,7 @@ function TextGalleryLayout({ title, subtitle, texts = [], images = [] }) {
         </div>
         <PhotoGallery images={images} variant="side" showHeading={false} />
       </div>
-    </>
+    </div>
   )
 }
 

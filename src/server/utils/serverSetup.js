@@ -29,14 +29,23 @@ class ServerSetup {
     const exeDir = this.isPkg ? path.dirname(process.execPath) : null;
     const candidates = [];
 
+    // Prefer files next to launch.exe (release folder layout).
     if (exeDir) {
       candidates.push({ dir: exeDir, snapshot: false });
       candidates.push({ dir: path.join(exeDir, 'build'), snapshot: false });
     }
 
+    // Packaged assets inside the exe — works even if launch.exe is copied alone.
+    if (this.isPkg) {
+      candidates.push({ dir: snapshotBuild, snapshot: true });
+    }
+
     candidates.push({ dir: process.cwd(), snapshot: false });
     candidates.push({ dir: path.join(process.cwd(), 'build'), snapshot: false });
-    candidates.push({ dir: snapshotBuild, snapshot: true });
+
+    if (!this.isPkg) {
+      candidates.push({ dir: snapshotBuild, snapshot: false });
+    }
 
     const seen = new Set();
 
@@ -133,7 +142,9 @@ class ServerSetup {
 
     if (!exists) {
       console.warn(`index.html not found in ${this.buildDir}`);
-      console.warn('Run "npm run build:win" before packaging, or keep launch.exe next to index.html from the release folder.');
+      console.warn(
+        'Run "npm run build:win" before packaging, or keep launch.exe next to index.html from the release folder.',
+      );
     }
 
     return exists;

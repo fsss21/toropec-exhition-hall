@@ -192,6 +192,26 @@
   overflow: hidden;
 }
 
+.galleryRoot,
+.splitRoot {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.galleryFrame {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+}
+
+.galleryFrame > * {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+}
+
 .peopleRoot {
   display: flex;
   flex-direction: column;
@@ -243,6 +263,27 @@
   color: #2c1f16;
 }
 
+.textRoot .subtitle {
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.4;
+}
+
+.textRoot .texts {
+  max-width: 860px;
+  line-height: 1.5;
+  gap: 0.95em;
+}
+
+.textRoot .texts p {
+  margin: 0;
+}
+
+.textRoot .textsPane {
+  max-height: none;
+}
+
 .textsScroll {
   display: flex;
   flex-direction: column;
@@ -280,6 +321,7 @@
   gap: 28px;
   align-items: stretch;
   margin-bottom: 12px;
+  flex: 1;
   min-height: 0;
 }
 
@@ -332,6 +374,7 @@
   font-size: 0.92rem;
   color: #5c4333;
   font-style: italic;
+  flex-shrink: 0;
 }
 
 .peopleGrid {
@@ -387,8 +430,9 @@
 .personView {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  height: 100%;
   min-height: 0;
+  overflow: hidden;
 }
 
 .personSplit {
@@ -396,15 +440,29 @@
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   gap: 24px;
   align-items: start;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .personSplitTextOnly {
   grid-template-columns: 1fr;
 }
 
-.personText .texts {
+.personText {
+  min-height: 0;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
+.personText .texts {
+  flex: 1;
+  min-height: 0;
   max-width: none;
+  overflow: auto;
+  scrollbar-width: thin;
 }
 
 .personTitle {
@@ -413,10 +471,12 @@
   font-size: 1.45rem;
   font-weight: 700;
   color: #221102;
+  flex-shrink: 0;
 }
 
 .personTextNav {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 12px;
 }

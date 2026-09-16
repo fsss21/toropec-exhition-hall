@@ -20,25 +20,30 @@
 
 .side.album {
   width: 100%;
+  height: min(68vh, 640px);
+  max-height: min(68vh, 640px);
+  align-self: start;
 }
 
-.side .albumPhoto img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+.side .albumText {
+  padding: 0 14px;
+}
+
+.side .albumCaption {
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .album {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
+  gap: 12px;
   margin-top: 8px;
   width: min(860px, 100%);
-  height: 640px;
+  height: 100%;
+  min-height: 0;
   margin-inline: auto;
   background: #EDE6D1;
   border: 2px solid #3F352B;
@@ -47,32 +52,42 @@
 }
 
 .albumPhoto {
-  flex: 1 1 auto;
-  min-height: 0;
+  flex: 1 1 0;
+  min-height: 280px;
   width: 100%;
-  height: 65%;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 8px 12px 0;
+  padding: 12px 16px 0;
 }
 
 .albumPhoto img {
-  max-width: 100%;
-  max-height: 100%;
   width: auto;
   height: auto;
+  max-width: none;
+  max-height: none;
   object-fit: contain;
   display: block;
-  margin: 0 auto;
+  margin: 0;
   border: none;
   background: none;
 }
 
-.albumText {
+.albumPhoto .placeholderLarge {
   width: 100%;
+  height: 100%;
+}
+
+.albumText {
+  flex: 0 0 4.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow: auto;
   text-align: center;
+  scrollbar-width: thin;
 }
 
 .albumCaption {
@@ -80,6 +95,7 @@
   font-family: 'Lora', Georgia, serif;
   font-size: 1.15rem;
   font-weight: 600;
+  line-height: 1.35;
   color: #221102;
 }
 
@@ -92,11 +108,12 @@
 
 .albumControls {
   display: flex;
+  flex: 0 0 56px;
   align-items: center;
   justify-content: center;
   gap: 16px;
   width: 100%;
-  margin-bottom: 18px;
+  margin: 0;
 }
 
 .albumNav {
@@ -255,14 +272,21 @@
 
 .figure {
   margin: 0;
-  max-width: min(1100px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: min(1600px, 94vw);
+  max-height: 92vh;
 }
 
 .figure img {
-  max-height: 70vh;
-  width: auto;
+  width: min(1500px, 92vw);
+  height: min(82vh, 920px);
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
   margin: 0 auto;
-  border: 1px solid #efe4cc;
 }
 
 .figure figcaption {

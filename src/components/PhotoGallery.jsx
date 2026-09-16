@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { resolveImageSrc } from '../utils/imageSrc.js'
 import styles from './PhotoGallery.module.css'
 
@@ -13,6 +13,8 @@ function PhotoGallery({
   const [fullscreen, setFullscreen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [broken, setBroken] = useState({})
+  const photoRef = useRef(null)
+  const imgRef = useRef(null)
 
   const source = items.length ? items : images
   const isExhibits = variant === 'exhibits'
@@ -23,11 +25,38 @@ function PhotoGallery({
 
   const sourceKey = source.map((item) => item.src).join('|')
 
+  const fitAlbumPhoto = useCallback(() => {
+    const wrap = photoRef.current
+    const img = imgRef.current
+    if (!wrap || !img?.naturalWidth) {
+      return
+    }
+
+    const availW = Math.max(1, wrap.clientWidth - 32)
+    const availH = Math.max(1, wrap.clientHeight - 16)
+    const scale = Math.min(availW / img.naturalWidth, availH / img.naturalHeight)
+    img.style.width = `${Math.round(img.naturalWidth * scale)}px`
+    img.style.height = `${Math.round(img.naturalHeight * scale)}px`
+  }, [])
+
   useEffect(() => {
     setFullscreen(false)
     setCurrentIndex(0)
     setBroken({})
   }, [pageIndex, variant, sourceKey])
+
+  useEffect(() => {
+    const wrap = photoRef.current
+    if (!wrap) {
+      return undefined
+    }
+
+    const observer = new ResizeObserver(() => fitAlbumPhoto())
+    observer.observe(wrap)
+    fitAlbumPhoto()
+
+    return () => observer.disconnect()
+  }, [fitAlbumPhoto, current?.src, variant])
 
   useEffect(() => {
     if (pageItems.length <= 1) {
@@ -186,7 +215,28 @@ function PhotoGallery({
     >
       {showHeading ? <h2 className={styles.heading}>Галерея</h2> : null}
 
-      <div className={styles.albumPhoto}>{renderMedia(current)}</div>
+      <div className={styles.albumPhoto} ref={photoRef}>
+        {broken[current.src] || broken[resolveImageSrc(current.src)] ? (
+          <div className={styles.placeholderLarge}>
+            <span>Изображение ещё не добавлено</span>
+            <small>{current.src}</small>
+          </div>
+        ) : (
+          <img
+            ref={imgRef}
+            src={resolveImageSrc(current.src)}
+            alt={current.alt}
+            onLoad={fitAlbumPhoto}
+            onError={() =>
+              setBroken((state) => ({
+                ...state,
+                [current.src]: true,
+                [resolveImageSrc(current.src)]: true,
+              }))
+            }
+          />
+        )}
+      </div>
 
       <div className={styles.albumText}>
         {current.caption ? <p className={styles.albumCaption}>{current.caption}</p> : null}
@@ -196,29 +246,29 @@ function PhotoGallery({
       </div>
 
       <div className={styles.albumControls}>
-        <div className={styles.albumNav}>
-          <button
-            type="button"
-            className={styles.albumArrow}
-            onClick={goPrev}
-            disabled={pageItems.length <= 1}
-            aria-label="Предыдущее фото"
-          >
-            ‹
-          </button>
-          <span className={styles.albumCounter}>
-            {currentIndex + 1} / {pageItems.length}
-          </span>
-          <button
-            type="button"
-            className={styles.albumArrow}
-            onClick={goNext}
-            disabled={pageItems.length <= 1}
-            aria-label="Следующее фото"
-          >
-            ›
-          </button>
-        </div>
+        {pageItems.length > 1 ? (
+          <div className={styles.albumNav}>
+            <button
+              type="button"
+              className={styles.albumArrow}
+              onClick={goPrev}
+              aria-label="Предыдущее фото"
+            >
+              ‹
+            </button>
+            <span className={styles.albumCounter}>
+              {currentIndex + 1} / {pageItems.length}
+            </span>
+            <button
+              type="button"
+              className={styles.albumArrow}
+              onClick={goNext}
+              aria-label="Следующее фото"
+            >
+              ›
+            </button>
+          </div>
+        ) : null}
 
         <button
           type="button"
